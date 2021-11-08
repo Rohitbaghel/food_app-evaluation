@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <div class="container">
+      <button onclick="orderfood()">order food</button>
+      <h1 id="head">notification</h1>
+      <div class="" id="id"></div>
+    </div>
+  </body>
+</html>
+<script>
+  let head = document.getElementById("head")
+   var cont = document.getElementById("id");
+  function show_meal() {
+    // let cont = document.getElementById("id");
+    let meal_cart = JSON.parse(localStorage.getItem("meal_cart"));
+    console.log(meal_cart);
+    meal_cart.forEach((data) => {
+      console.log(data.strCategory);
+      let name = document.createElement("p");
+      name.textContent = data.strCategory;
+      // console.log(name)
+      let img = document.createElement("img");
+      img.src = data.strCategoryThumb;
+      // console.log(img)
+      let desc = document.createElement("p");
+      desc.textContent = data.strCategoryDescription;
+      cont.append(img, name,desc);
+    });
+  }
+  function orderfood(){
+     head.innertext = "Notification = Your order is accepted"
+     let time1 = setTimeout(()=>{
+       cont.innerHTML =null
+       head.innertext = "Your order is cooking"
+     },3000)
+     let time2 = setTimeout(()=>{
+       alert("your order is ready")
+     },8000)
+     let time3 = setTimeout(()=>{
+       alert("your order is ready for delivery")
+     },10000)
+   }
+  show_meal();
+</script>

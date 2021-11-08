@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="tailwind.css">
+    <title>Navbar</title>
+</head>
+<body>
+    <!-- navbar -->
+    <nav class="bg-gray-800">
+      <div class="max-w-7xl mx-auto px-2 sm:px-6 lg:px-8">
+          <div class="relative flex items-center justify-between h-16">
+            <div class="">
+                <img src="https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fcdn.dribbble.com%2Fusers%2F630677%2Fscreenshots%2F3833541%2Fzootzoot1.jpg&f=1&nofb=1" alt="" style="width: 75px; ">
+            </div>
+            <div class="grid grid-cols-2 gap-5">
+            <div ><button class="bg-red-500">sign in</button></div>
+            <div><button class="bg-red-500">signup</button></div>
+            </div>
+          </div>
+      </div>
+    </nav>
+<!-- navbar -->
+<button onclick="cart()">go to cart</button>
+<div class="container">
+<div id="mealcart" class="grid grid-cols-3 gap-4 "></div>
+</div>
+</body>
+</html>
+<script>
+     let mealcart = document.getElementById("mealcart")
+    //  console.log(mealcart)
+async function showmeal(){
+let res = await fetch("https://www.themealdb.com/api/json/v1/1/categories.php")
+let data = await res.json()
+console.log(data.categories)
+append_data(data.categories)
+}
+function append_data(data) {
+data.forEach((mymeal)=>{
+
+    let div1 = document.createElement("div")
+    div1.setAttribute("class","border text-center")
+    mealcart.append(div1)
+let img = document.createElement("img")
+img.src =mymeal.strCategoryThumb
+// console.log(img)
+let name = document.createElement("p")
+name.innerText = mymeal.strCategory
+// console.log(name)
+let desc = document.createElement("p")
+desc.innerText = strCategoryDescription
+let button = document.createElement("button")
+// console.log(button)
+button.textContent = "add to cart"
+button.setAttribute("class","border bg-red-500")
+button.onclick = function (){
+    addtocart( mymeal)
+}
+div1.append(img,name,desc,button)
+})
+}
+function addtocart(p){
+if(localStorage.getItem("meal_cart") == null){
+localStorage.setItem("meal_cart",JSON.stringify([]))
+}
+let mealcart = JSON.parse(localStorage.getItem("meal_cart"))
+// console.log("1")
+mealcart.push(p)
+localStorage.setItem("meal_cart",JSON.stringify(mealcart))
+console.log(mealcart)
+}
+showmeal()
+function cart(){
+    window.location.href = "cart.html"
+}
+</script>
